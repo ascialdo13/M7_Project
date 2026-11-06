@@ -1,0 +1,7 @@
+- [ ] 1. The green light doesn’t show up on the RGB LED but the program runs perfectly on screen
+- [ ] 2. The light that is meant to flash red when pressed early is flashing green
+- [ ] 3. The light is red when I click on the button rather than any other colour
+- [ ] 4. The colour boxes that indicate what speed is what colour doesn’t need to have the colour name since the colour is there
+- [ ] 5. No need for the GPIO 7 in brackets where it says “keep your finger on the button”
+- [ ] 6. Randomize the phrases for each colour so that it’s not the same phrase every time
+- [ ] 7. The title can be more professional rather than ESP32 lab
