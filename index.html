@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESP32 REACTION LAB</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Top Header Bar: Part 1, Part 2, Part 3 -->
+    <header class="top-bar">
+      <!-- Part 2: Connection Control Pill -->
+      <div class="connection-pill" id="connectionPill">
+        <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+        <span class="status-label" id="connectionStatusText">ESP32: Disconnected</span>
+        <button type="button" class="connect-btn" id="connectBtn">Connect ESP32</button>
+      </div>
+
+      <!-- Part 1: Dashboard Title -->
+      <div class="header-title-block">
+        <h1 class="dashboard-title" id="dashboardTitle">ESP32 REACTION LAB</h1>
+        <p class="dashboard-subtitle" id="dashboardSubtitle">Hardware-Timed Millisecond Reflex Test</p>
+      </div>
+
+      <!-- Part 3: Personal Best Card (Top-Right Corner) -->
+      <div class="personal-best-card" id="personalBestCard" aria-live="polite">
+        <span class="pb-label" id="personalBestLabel">PERSONAL BEST</span>
+        <span class="pb-value" id="personalBestValue">-- ms</span>
+      </div>
+    </header>
+
+    <!-- Part 4: Error / System Banner (Hidden When Normal) -->
+    <div class="error-banner hidden" id="errorBanner" role="alert" aria-live="assertive"></div>
+
+    <!-- Main Game Arena Card: Part 5, Part 6, Part 7 -->
+    <main class="arena-card state-idle" id="arenaCard">
+      <!-- Part 5: Virtual LED Ring & Main Status / Time Readout -->
+      <div class="led-indicator-wrapper">
+        <div class="virtual-led led-off" id="virtualLed" aria-hidden="true"></div>
+      </div>
+
+      <h2 class="main-status-text" id="mainStatusText" aria-live="polite">Press Start Test to begin</h2>
+
+      <!-- Part 6: Quirky Comment Line -->
+      <p class="quirky-comment-text" id="quirkyCommentText">Connect your ESP32-SC and test your reflexes.</p>
+
+      <!-- Part 7: Primary Action Button ("Start Test" / "Try Again") -->
+      <div class="action-btn-container">
+        <button type="button" class="primary-action-btn" id="primaryActionBtn">Start Test</button>
+      </div>
+    </main>
+
+    <!-- Part 8: Color Legend Bar (Bottom of Dashboard) -->
+    <footer class="legend-bar" aria-label="Reaction Time Color Legend">
+      <div class="legend-pill legend-green" id="legendGreen">&lt;200ms - Green</div>
+      <div class="legend-pill legend-yellow" id="legendYellow">200-300ms - Yellow</div>
+      <div class="legend-pill legend-orange" id="legendOrange">300-400ms - Orange</div>
+      <div class="legend-pill legend-red" id="legendRed">&gt;400ms - Red</div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

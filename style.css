@@ -1,0 +1,421 @@
+:root {
+  --bg-dark: #0b1120;
+  --bg-card: #1e293b;
+  --bg-card-elevated: #0f172a;
+  --border-neutral: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --color-green: #22c55e;
+  --color-yellow: #eab308;
+  --color-orange: #f97316;
+  --color-red: #ef4444;
+  --color-blue: #3b82f6;
+  --color-waiting: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg-dark) 70%);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Top Header Bar (Part 1, Part 2, Part 3) */
+.top-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--border-neutral);
+  border-radius: 16px;
+  padding: 16px 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Part 2: Connection Control Pill */
+.connection-pill {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-neutral);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #64748b;
+  box-shadow: 0 0 6px rgba(100, 116, 139, 0.6);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-dot.connected {
+  background: var(--color-green);
+  box-shadow: 0 0 10px var(--color-green);
+}
+
+.status-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.connect-btn {
+  background: var(--color-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.15s ease, background 0.15s ease;
+}
+
+.connect-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.connect-btn.connected {
+  background: #475569;
+}
+
+/* Part 1: Dashboard Title */
+.header-title-block {
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.dashboard-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+/* Part 3: Personal Best Card (Top Right) */
+.personal-best-card {
+  justify-self: end;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid #38bdf8;
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-align: right;
+  min-width: 155px;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.personal-best-card.pb-updated {
+  transform: scale(1.06);
+  border-color: var(--color-green);
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.45);
+}
+
+.pb-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #38bdf8;
+}
+
+.pb-value {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Part 4: Error / System Banner */
+.error-banner {
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid var(--color-red);
+  color: #fecaca;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Main Game Arena Card (Part 5, Part 6, Part 7) */
+.arena-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-neutral);
+  border-radius: 24px;
+  padding: 48px 32px;
+  min-height: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.arena-card.state-waiting {
+  border-color: var(--color-waiting);
+  box-shadow: 0 0 35px rgba(245, 158, 11, 0.2);
+}
+
+.arena-card.state-go {
+  border-color: var(--color-green);
+  box-shadow: 0 0 50px rgba(34, 197, 94, 0.4);
+}
+
+.arena-card.tier-green {
+  border-color: var(--color-green);
+  box-shadow: 0 0 45px rgba(34, 197, 94, 0.35);
+}
+
+.arena-card.tier-yellow {
+  border-color: var(--color-yellow);
+  box-shadow: 0 0 45px rgba(234, 179, 8, 0.35);
+}
+
+.arena-card.tier-orange {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 45px rgba(249, 115, 22, 0.35);
+}
+
+.arena-card.tier-red,
+.arena-card.state-early,
+.arena-card.state-miss {
+  border-color: var(--color-red);
+  box-shadow: 0 0 45px rgba(239, 68, 68, 0.35);
+}
+
+/* Virtual LED Indicator Ring */
+.led-indicator-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.virtual-led {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 4px solid #475569;
+  background: #0f172a;
+  transition: background 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
+}
+
+.virtual-led.led-off {
+  background: #0f172a;
+  border-color: #475569;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.8);
+}
+
+.virtual-led.led-green {
+  background: var(--color-green);
+  border-color: #86efac;
+  box-shadow: 0 0 36px var(--color-green), inset 0 0 12px #ffffff;
+}
+
+.virtual-led.led-blue {
+  background: var(--color-blue);
+  border-color: #93c5fd;
+  box-shadow: 0 0 36px var(--color-blue), inset 0 0 12px #ffffff;
+}
+
+.virtual-led.led-red-blink {
+  animation: rapidRedBlink 0.2s steps(2, start) infinite;
+}
+
+@keyframes rapidRedBlink {
+  0%, 49% {
+    background: var(--color-red);
+    border-color: #fca5a5;
+    box-shadow: 0 0 40px var(--color-red), inset 0 0 12px #ffffff;
+  }
+  50%, 100% {
+    background: #0f172a;
+    border-color: #7f1d1d;
+    box-shadow: none;
+  }
+}
+
+/* Main Status / Reaction Time Text */
+.main-status-text {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.arena-card.tier-green .main-status-text {
+  color: var(--color-green);
+}
+
+.arena-card.tier-yellow .main-status-text {
+  color: var(--color-yellow);
+}
+
+.arena-card.tier-orange .main-status-text {
+  color: var(--color-orange);
+}
+
+.arena-card.tier-red .main-status-text,
+.arena-card.state-early .main-status-text,
+.arena-card.state-miss .main-status-text {
+  color: var(--color-red);
+}
+
+/* Quirky Comment Line (Part 6) */
+.quirky-comment-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+/* Primary Action Button ("Start Test" / "Try Again" - Part 7) */
+.action-btn-container {
+  margin-top: 8px;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-action-btn {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #052e16;
+  border: none;
+  border-radius: 14px;
+  padding: 15px 38px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+.primary-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(34, 197, 94, 0.5);
+}
+
+.primary-action-btn:active {
+  transform: translateY(0);
+}
+
+/* Color Legend Bar (Part 8) */
+.legend-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.legend-pill {
+  background: var(--bg-card-elevated);
+  border: 2px solid var(--border-neutral);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.legend-pill.legend-green {
+  border-left: 6px solid var(--color-green);
+}
+
+.legend-pill.legend-yellow {
+  border-left: 6px solid var(--color-yellow);
+}
+
+.legend-pill.legend-orange {
+  border-left: 6px solid var(--color-orange);
+}
+
+.legend-pill.legend-red {
+  border-left: 6px solid var(--color-red);
+}
+
+.legend-pill.active-pill {
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.legend-pill.legend-green.active-pill {
+  border-color: var(--color-green);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.35);
+}
+
+.legend-pill.legend-yellow.active-pill {
+  border-color: var(--color-yellow);
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.35);
+}
+
+.legend-pill.legend-orange.active-pill {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 18px rgba(249, 115, 22, 0.35);
+}
+
+.legend-pill.legend-red.active-pill {
+  border-color: var(--color-red);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.35);
+}
+
+@media (max-width: 760px) {
+  .top-bar {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .connection-pill,
+  .personal-best-card {
+    justify-self: center;
+    text-align: center;
+  }
+  .legend-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .main-status-text {
+    font-size: 2rem;
+  }
+}
+
