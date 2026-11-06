@@ -42,9 +42,9 @@ struct HardwareSerialStub {
 static HardwareSerialStub Serial;
 #endif
 
-const int PIN_LED_RED   = 12;
-const int PIN_LED_GREEN = 13;
-const int PIN_LED_BLUE  = 14;
+const int PIN_LED_RED   = 14;
+const int PIN_LED_GREEN = 12;
+const int PIN_LED_BLUE  = 11;
 const int PIN_BUTTON    = 7;
 
 enum FirmwareState {
@@ -66,9 +66,12 @@ bool debouncedButtonPressed = false;
 String serialCommandBuffer = "";
 
 void setRgbLed(bool redOn, bool greenOn, bool blueOn) {
-  digitalWrite(PIN_LED_RED,   redOn   ? HIGH : LOW);
-  digitalWrite(PIN_LED_GREEN, greenOn ? HIGH : LOW);
-  digitalWrite(PIN_LED_BLUE,  blueOn  ? HIGH : LOW);
+  digitalWrite(PIN_LED_RED,   LOW);
+  digitalWrite(PIN_LED_GREEN, LOW);
+  digitalWrite(PIN_LED_BLUE,  LOW);
+  if (redOn)   digitalWrite(PIN_LED_RED,   HIGH);
+  if (greenOn) digitalWrite(PIN_LED_GREEN, HIGH);
+  if (blueOn)  digitalWrite(PIN_LED_BLUE,  HIGH);
 }
 
 // Instant-edge detection with 20 ms lockout debounce so 0 ms lag is added to reaction time
@@ -183,7 +186,7 @@ void loop() {
       setRgbLed(redPhaseOn, false, false);
     }
   } else if (firmwareState == STATE_BLUE_HOLD) {
-    if ((now - blinkStartMs) >= 1000) {
+    if ((now - blinkStartMs) >= 300) {
       setRgbLed(false, false, false);
       firmwareState = STATE_IDLE;
     }

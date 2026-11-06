@@ -16,7 +16,7 @@ let blueHoldTimeoutId = null;
 const BAUD_RATE = 115200;
 const INACTIVITY_LIMIT_MS = 3600000; // 60 minutes (1 hour)
 const EARLY_BLINK_DURATION_MS = 2500; // 2.5 seconds rapid red blink
-const BLUE_HOLD_DURATION_MS = 1000; // 1 second blue confirmation LED
+const BLUE_HOLD_DURATION_MS = 150; // Brief 0.15 second blue flash on webpage
 
 // DOM References (Parts 1 to 8 from 02_frontend.md)
 const statusDot = document.getElementById("statusDot");
@@ -139,33 +139,68 @@ function setIdleScreen(buttonLabel = "Start Test") {
   primaryActionBtn.classList.remove("hidden");
 }
 
+const REACTION_PHRASES = {
+  green: [
+    "Lightning reflexes! Are you even human?",
+    "Blink and you'd miss it! Incredible speed!",
+    "Superhuman reaction time! Are you a robot?",
+    "Faster than the speed of light!",
+    "Unbelievable! Your reflexes are on fire!"
+  ],
+  yellow: [
+    "Sharp and speedy! Nice reaction.",
+    "Quick on the draw! Solid reflexes.",
+    "Great timing! You're locked in.",
+    "Fast fingers! Just shy of sub-200ms.",
+    "Snappy reaction! Keep that momentum going."
+  ],
+  orange: [
+    "Not bad, but you could use a coffee.",
+    "A little hesitant! Shake off the rust.",
+    "Decent effort, but you can definitely go faster.",
+    "Warming up? Let's see some more speed!",
+    "Middle of the pack—focus on that green light!"
+  ],
+  red: [
+    "Did you fall asleep? My grandma clicks faster!",
+    "Paging Mission Control... were you daydreaming?",
+    "Slower than a sloth on a Sunday afternoon!",
+    "Did you wait for a written invitation?",
+    "Lag in the brain! Wake up and try again!"
+  ]
+};
+
+function getRandomPhrase(phrases) {
+  return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
 // Classify reaction time into the 4 brackets from 01_overview.md & 02_frontend.md
 function getReactionBracket(ms) {
   if (ms < 200) {
     return {
       arenaClass: "tier-green",
       legendEl: legendGreen,
-      comment: "Lightning reflexes! Are you even human?"
+      comment: getRandomPhrase(REACTION_PHRASES.green)
     };
   }
   if (ms <= 300) {
     return {
       arenaClass: "tier-yellow",
       legendEl: legendYellow,
-      comment: "Sharp and speedy! Nice reaction."
+      comment: getRandomPhrase(REACTION_PHRASES.yellow)
     };
   }
   if (ms <= 400) {
     return {
       arenaClass: "tier-orange",
       legendEl: legendOrange,
-      comment: "Not bad, but you could use a coffee."
+      comment: getRandomPhrase(REACTION_PHRASES.orange)
     };
   }
   return {
     arenaClass: "tier-red",
     legendEl: legendRed,
-    comment: "Did you fall asleep? My grandma clicks faster!"
+    comment: getRandomPhrase(REACTION_PHRASES.red)
   };
 }
 
@@ -187,7 +222,7 @@ function handleSerialLine(line) {
     clearLegendHighlights();
     setVirtualLedState("OFF");
     mainStatusText.textContent = "Wait for the green light on your ESP32...";
-    quirkyCommentText.textContent = "Keep your finger ready on the ESP32 button (GPIO 7)...";
+    quirkyCommentText.textContent = "Keep your finger ready on the ESP32 button...";
     primaryActionBtn.classList.add("hidden");
     return;
   }
@@ -396,7 +431,7 @@ async function startTestRound() {
   clearLegendHighlights();
   setVirtualLedState("OFF");
   mainStatusText.textContent = "Wait for the green light on your ESP32...";
-  quirkyCommentText.textContent = "Keep your finger ready on the ESP32 button (GPIO 7)...";
+  quirkyCommentText.textContent = "Keep your finger ready on the ESP32 button...";
   primaryActionBtn.classList.add("hidden");
 
   await sendSerialCommand("START\n");
